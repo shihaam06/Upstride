@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpStride - Student Pitch Evaluation Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background-color: #f8fafc;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark Mode */
+        body.dark {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark nav {
+            background: #1e293b;
+        }
+
+        body.dark .logo {
+            color: #e2e8f0;
+        }
+
+        body.dark .nav-links a {
+            color: #94a3b8;
+        }
+
+        body.dark .nav-links a:hover, 
+        body.dark .nav-links a.active {
+            color: #60a5fa;
+        }
+
+        body.dark .benefit-card,
+        body.dark .mentor-card,
+        body.dark .booking-section,
+        body.dark .filters,
+        body.dark .sessions-list,
+        body.dark .stat-card,
+        body.dark .modal-content {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        body.dark .benefit-card h3,
+        body.dark .mentor-info h3 {
+            color: #e2e8f0;
+        }
+
+        body.dark .filter-group select,
+        body.dark .filter-group input {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        body.dark .calendar-day {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        body.dark .time-slot {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        body.dark .session-item {
+            border-color: #334155;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1e293b;
+            letter-spacing: -0.025em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '';
+            width: 32px;
+            height: 32px;
+            background: #1d4ed8;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='10' y='70' width='15' height='20' fill='%231d4ed8'/%3E%3Crect x='30' y='60' width='15' height='30' fill='%231d4ed8'/%3E%3Crect x='50' y='50' width='15' height='40' fill='%231d4ed8'/%3E%3Cpath d='M20 40 Q40 20 70 35 L85 25 L80 40 L65 35 Q45 25 30 45' fill='%231d4ed8'/%3E%3C/svg%3E") center/contain no-repeat;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='10' y='70' width='15' height='20' fill='%231d4ed8'/%3E%3Crect x='30' y='60' width='15' height='30' fill='%231d4ed8'/%3E%3Crect x='50' y='50' width='15' height='40' fill='%231d4ed8'/%3E%3Cpath d='M20 40 Q40 20 70 35 L85 25 L80 40 L65 35 Q45 25 30 45' fill='%231d4ed8'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            margin-left: 1rem;
+        }
+
+        .theme-toggle:hover {
+            border-color: #1d4ed8;
+        }
+
+        body.dark .theme-toggle {
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        body.dark .theme-toggle:hover {
+            border-color: #60a5fa;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #1d4ed8;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #d97706;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1d4ed8;
+            border: 2px solid #1d4ed8;
+        }
+
+        .btn-outline:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 80px 0;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefit-card .icon {
+            background: #dbeafe;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        .benefit-card h3 {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card p {
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        /* Mentor Cards */
+        .filters {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .mentors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .mentor-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .mentor-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .mentor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #1d4ed8, #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .mentor-info h3 {
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .mentor-expertise {
+            color: #1d4ed8;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mentor-rate {
+            color: #f59e0b;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .mentor-type {
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .mentor-type.professional {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .mentor-type.senior {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .mentor-type.president {
+            background: #fce7f3;
+            color: #be185d;
+        }
+
+        .mentor-college {
+            color: #64748b;
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .mentor-bio {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .mentor-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star {
+            color: #fbbf24;
+            font-size: 1rem;
+        }
+
+        .star.empty {
+            color: #d1d5db;
+        }
+
+        .rating-text {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .mentor-reviews {
+            margin-bottom: 1.5rem;
+        }
+
+        .review-item {
+            background: #f8fafc;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid #1d4ed8;
+        }
+
+        .review-text {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-style: italic;
+            margin-bottom: 0.25rem;
+        }
+
+        .review-author {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            font-weight: 500;
+        }
+
+        body.dark .mentor-bio,
+        body.dark .rating-text {
+            color: #94a3b8;
+        }
+
+        body.dark .review-item {
+            background: #334155;
+        }
+
+        body.dark .review-text {
+            color: #94a3b8;
+        }
+
+        body.dark .review-author {
+            color: #64748b;
+        }
+
+        /* Confirmation Page Styles */
+        .confirmation-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        body.dark .confirmation-card {
+            background: #1e293b;
+        }
+
+        .success-icon {
+            background: #dcfce7;
+            color: #166534;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 1rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        body.dark .detail-row {
+            border-color: #334155;
+        }
+
+        .payment-summary {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        body.dark .payment-summary {
+            background: #334155;
+        }
+
+        .next-steps {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        body.dark .next-steps {
+            background: #1e40af20;
+            border-color: #1e40af40;
+        }
+
+        /* Booking Page */
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .booking-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .pitch-options {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .pitch-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pitch-option:hover, .pitch-option.selected {
+            border-color: #1d4ed8;
+            background: #dbeafe;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calendar-day:hover {
+            background: #eff6ff;
+        }
+
+        .calendar-day.available {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .calendar-day.selected {
+            background: #2563eb;
+            color: white;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .time-slot {
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover, .time-slot.selected {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        /* Dashboard */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1d4ed8;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .sessions-list {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .session-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .session-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-upcoming {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-paid {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-content .icon {
+            background: #dcfce7;
+            color: #166534;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links li:not(:last-child) {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .booking-container {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .logo::before {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .theme-toggle {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">UpStride</div>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
+                    <li><a href="#" onclick="showPage('mentors')">Pitch Your Idea</a></li>
+                    <li><a href="#" onclick="showPage('my-pitches')">My Pitches</a></li>
+                    <li><button class="theme-toggle" onclick="toggleTheme()">🌙</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Pitch your idea. Get expert feedback.</h1>
+                <p>Connect with experienced evaluators who can help transform your ideas into reality</p>
+                <a href="#" onclick="showPage('mentors')" class="btn btn-secondary">Pitch Your Idea</a>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <div class="container">
+            <div class="benefits">
+                <div class="benefit-card">
+                    <div class="icon">🎯</div>
+                    <h3>Pitch Perfection</h3>
+                    <p>Get detailed feedback on your pitch deck, presentation skills, and idea clarity from industry experts</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">🚀</div>
+                    <h3>Idea Validation</h3>
+                    <p>Validate your business concept with experienced entrepreneurs who understand market dynamics</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">💡</div>
+                    <h3>Strategic Insights</h3>
+                    <p>Receive actionable advice on refining your value proposition and competitive positioning</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">📈</div>
+                    <h3>Investor Ready</h3>
+                    <p>Polish your pitch to investor standards with feedback from those who've secured funding</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mentors Page -->
+    <div id="mentors" class="page">
+        <div class="container">
+            <h2 style="text-align: center; margin: 3rem 0; font-size: 2.5rem; color: #1f2937;">Pitch Your Idea to Experts</h2>
+
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label for="priceRange">Budget Range</label>
+                        <select id="priceRange" onchange="applyFilters()">
+                            <option value="">All Budgets</option>
+                            <option value="0-300">Under ₹300</option>
+                            <option value="301-600">₹300 - ₹600</option>
+                            <option value="601+">₹600+</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="industry">Your Idea Category</label>
+                        <select id="industry" onchange="applyFilters()">
+                            <option value="">All Categories</option>
+                            <option value="tech">Technology & Apps</option>
+                            <option value="business">Business & Services</option>
+                            <option value="finance">Finance & Fintech</option>
+                            <option value="design">Design & Creative</option>
+                            <option value="marketing">Marketing & Growth</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="searchName">Search Experts</label>
+                        <input type="text" id="searchName" placeholder="Search by name or expertise..." oninput="applyFilters()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mentors Grid -->
+            <div class="mentors-grid" id="mentorsGrid">
+                <!-- Mentor cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Page -->
+    <div id="booking" class="page">
+        <div class="container">
+            <h2 style="text-align: center; margin: 3rem 0; font-size: 2.5rem; color: #1f2937;">Book Your Pitch Review</h2>
+            
+            <div class="booking-container">
+                <!-- Pitch Options -->
+                <div class="booking-section">
+                    <h3 style="margin-bottom: 1.5rem; color: #1f2937;">Choose Your Pitch Review Method</h3>
+                    
+                    <div class="pitch-options">
+                        <div class="pitch-option" onclick="selectPitchOption('file')">
+                            <h4>📄 Pitch Deck Review</h4>
+                            <p>Upload your pitch deck, business plan, or demo video for detailed feedback</p>
+                            <small style="color: #64748b;">Written feedback within 24-48 hours</small>
+                            <div style="margin-top: 0.5rem; font-weight: bold; color: #f59e0b;">Starting ₹79 per pitch</div>
+                        </div>
+                        <div class="pitch-option" onclick="selectPitchOption('live')">
+                            <h4>🎥 Live Pitch Session</h4>
+                            <p>Present your idea live and get real-time feedback and Q&A</p>
+                            <small style="color: #64748b;">30-60 minute interactive sessions</small>
+                            <div style="margin-top: 0.5rem; font-weight: bold; color: #f59e0b;">₹1,250 per session</div>
+                        </div>
+                    </div>
+
+                    <div id="fileUpload" style="display: none; margin-top: 1rem;">
+                        <input type="file" accept=".ppt,.pptx,.pdf,.mp4,.mov" style="width: 100%; padding: 10px; border: 2px dashed #2563eb; border-radius: 6px;">
+                        <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">Accepted formats: PPT, PDF, MP4, MOV (max 50MB)</p>
+                    </div>
+                </div>
+
+                <!-- Calendar & Payment -->
+                <div class="booking-section">
+                    <h3 id="schedulingTitle" style="margin-bottom: 1.5rem; color: #1f2937;">Select Date & Time</h3>
+                    
+                    <div id="calendarSection">
+                        <div class="calendar-grid">
+                            <div class="calendar-day">Mon</div>
+                            <div class="calendar-day">Tue</div>
+                            <div class="calendar-day">Wed</div>
+                            <div class="calendar-day">Thu</div>
+                            <div class="calendar-day">Fri</div>
+                            <div class="calendar-day">Sat</div>
+                            <div class="calendar-day">Sun</div>
+                            <div class="calendar-day">1</div>
+                            <div class="calendar-day available" onclick="selectDate(this)">2</div>
+                            <div class="calendar-day">3</div>
+                            <div class="calendar-day available" onclick="selectDate(this)">4</div>
+                            <div class="calendar-day available" onclick="selectDate(this)">5</div>
+                            <div class="calendar-day">6</div>
+                            <div class="calendar-day">7</div>
+                            <div class="calendar-day available" onclick="selectDate(this)">8</div>
+                            <div class="calendar-day available" onclick="selectDate(this)">9</div>
+                            <div class="calendar-day">10</div>
+                            <div class="calendar-day available" onclick="selectDate(this)">11</div>
+                            <div class="calendar-day available" onclick="selectDate(this)">12</div>
+                            <div class="calendar-day">13</div>
+                            <div class="calendar-day">14</div>
+                        </div>
+
+                        <div class="time-slots" id="timeSlots" style="display: none;">
+                            <div class="time-slot" onclick="selectTime(this)">9:00 AM</div>
+                            <div class="time-slot" onclick="selectTime(this)">10:30 AM</div>
+                            <div class="time-slot" onclick="selectTime(this)">2:00 PM</div>
+                            <div class="time-slot" onclick="selectTime(this)">3:30 PM</div>
+                            <div class="time-slot" onclick="selectTime(this)">5:00 PM</div>
+                        </div>
+                    </div>
+
+                    <div id="fileOnlyMessage" style="display: none; text-align: center; padding: 2rem; background: #f0f9ff; border-radius: 8px; margin-bottom: 2rem;">
+                        <h4 style="color: #0c4a6e; margin-bottom: 0.5rem;">📄 File Review Selected</h4>
+                        <p style="color: #0369a1;">Upload your pitch file above and you'll receive detailed written feedback within 24-48 hours. No scheduling required!</p>
+                    </div>
+
+                    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;" id="pricingSection">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span>Session Fee:</span>
+                            <span style="font-weight: bold;" id="sessionFee">₹1,250</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span>Platform Fee:</span>
+                            <span id="platformFee">₹125</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem;">
+                            <span>Total:</span>
+                            <span id="totalFee">₹1,375</span>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" onclick="processPayment()">Confirm & Pay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Pitches Page -->
+    <div id="my-pitches" class="page">
+        <div class="container">
+            <h2 style="text-align: center; margin: 3rem 0; font-size: 2.5rem; color: #1f2937;">My Pitch Reviews</h2>
+            
+            <!-- Stats -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div>Active Reviews</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div>Total Pitches</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₹2,450</div>
+                    <div>Total Spent</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4.2</div>
+                    <div>Avg Feedback Score</div>
+                </div>
+            </div>
+
+            <!-- Pitches List -->
+            <div class="sessions-list">
+                <div style="padding: 1.5rem; background: #f8fafc; font-weight: 600; color: #374151;">
+                    Your Pitch Reviews & Sessions
+                </div>
+                <div class="session-item">
+                    <div>
+                        <div style="font-weight: 600;">E-commerce Platform Pitch</div>
+                        <div style="color: #64748b; font-size: 0.9rem;">Expert: Sarah Johnson • Live Session</div>
+                        <div style="color: #64748b; font-size: 0.8rem;">Today, 2:00 PM</div>
+                    </div>
+                    <span class="status-badge status-upcoming">Upcoming</span>
+                </div>
+                <div class="session-item">
+                    <div>
+                        <div style="font-weight: 600;">AI Startup Deck v2</div>
+                        <div style="color: #64748b; font-size: 0.9rem;">Expert: Michael Chen • File Review</div>
+                        <div style="color: #64748b; font-size: 0.8rem;">Submitted yesterday • Feedback pending</div>
+                    </div>
+                    <span class="status-badge status-upcoming">In Review</span>
+                </div>
+                <div class="session-item">
+                    <div>
+                        <div style="font-weight: 600;">Fintech App Concept</div>
+                        <div style="color: #64748b; font-size: 0.9rem;">Expert: David Kim • Live Session</div>
+                        <div style="color: #64748b; font-size: 0.8rem;">Dec 15, 3:30 PM • Score: 8.5/10</div>
+                    </div>
+                    <span class="status-badge status-completed">Feedback Received</span>
+                </div>
+                <div class="session-item">
+                    <div>
+                        <div style="font-weight: 600;">SaaS Business Plan</div>
+                        <div style="color: #64748b; font-size: 0.9rem;">Expert: Emily Rodriguez • File Review</div>
+                        <div style="color: #64748b; font-size: 0.8rem;">Dec 12 • Score: 7.2/10 • Cost: ₹199</div>
+                    </div>
+                    <span class="status-badge status-completed">Completed</span>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-primary" onclick="showPage('mentors')">Submit New Pitch</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Page -->
+    <div id="confirmation" class="page">
+        <div class="container">
+            <div style="max-width: 600px; margin: 0 auto; padding: 3rem 0;">
+                <!-- Success Icon -->
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="background: #dcfce7; color: #166534; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; margin: 0 auto 1rem;">✓</div>
+                    <h1 style="color: #166534; margin-bottom: 0.5rem; font-size: 2.5rem;">Booking Confirmed!</h1>
+                    <p style="color: #64748b; font-size: 1.1rem;">Your pitch review session has been successfully booked</p>
+                </div>
+
+                <!-- Booking Summary Card -->
+                <div style="background: white; border-radius: 16px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1); margin-bottom: 2rem;">
+                    <h2 style="color: #1f2937; margin-bottom: 2rem; text-align: center; font-size: 1.5rem;">Pitch Review Summary</h2>
+                    
+                    <!-- Mentor Info -->
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #e5e7eb;">
+                        <div id="confirmMentorAvatar" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #1d4ed8, #f59e0b); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; font-weight: 700;"></div>
+                        <div>
+                            <h3 id="confirmMentorName" style="color: #1f2937; margin-bottom: 0.25rem;"></h3>
+                            <div id="confirmMentorExpertise" style="color: #1d4ed8; font-weight: 600; font-size: 0.9rem;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Session Details -->
+                    <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+                        <div style="display: flex; justify-content: space-between; padding: 0.75rem 0;">
+                            <span style="color: #64748b; font-weight: 500;">Review Type:</span>
+                            <span id="confirmSessionType" style="font-weight: 600;"></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-top: 1px solid #f1f5f9;">
+                            <span style="color: #64748b; font-weight: 500;">Date:</span>
+                            <span id="confirmDate" style="font-weight: 600;"></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-top: 1px solid #f1f5f9;">
+                            <span style="color: #64748b; font-weight: 500;">Time:</span>
+                            <span id="confirmTime" style="font-weight: 600;"></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-top: 1px solid #f1f5f9;">
+                            <span style="color: #64748b; font-weight: 500;">Duration:</span>
+                            <span id="confirmDuration" style="font-weight: 600;"></span>
+                        </div>
+                    </div>
+
+                    <!-- Payment Summary -->
+                    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h4 style="color: #1f2937; margin-bottom: 1rem;">Payment Summary</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Session Fee:</span>
+                            <span id="confirmSessionFee"></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Platform Fee:</span>
+                            <span id="confirmPlatformFee"></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem; padding-top: 0.5rem; border-top: 1px solid #e5e7eb;">
+                            <span>Total Paid:</span>
+                            <span id="confirmTotal" style="color: #166534;"></span>
+                        </div>
+                    </div>
+
+                    <!-- Next Steps -->
+                    <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 1.5rem;">
+                        <h4 style="color: #1e40af; margin-bottom: 1rem;">📋 What's Next?</h4>
+                        <ul style="color: #1e40af; padding-left: 1rem;">
+                            <li style="margin-bottom: 0.5rem;">You'll receive a confirmation email with session details</li>
+                            <li style="margin-bottom: 0.5rem;" id="nextStepInfo">Zoom link will be sent 30 minutes before the session</li>
+                            <li style="margin-bottom: 0.5rem;">Prepare your pitch presentation and key questions for evaluation</li>
+                            <li>You can reschedule up to 24 hours before the session</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <button class="btn btn-outline" onclick="showPage('mentors')">Book Another Review</button>
+                    <button class="btn btn-primary" onclick="showPage('home')">Back to Home</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="icon">✓</div>
+            <h2 style="color: #166534; margin-bottom: 1rem;">Booking Confirmed!</h2>
+            <p style="color: #64748b; margin-bottom: 2rem;">Your pitch review has been booked successfully. You'll receive a confirmation email with all the details.</p>
+            <button class="btn btn-primary" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        
+        // Sample mentor data
+        const mentors = [
+            // Industry Professionals
+            {
+                name: "Zama Arsh",
+                expertise: "Tech Startups",
+                experience: "10-15",
+                industry: "tech",
+                liveRate: 1199,
+                fileRate: 299,
+                bio: "Former VP at Google, helped launch 3 successful startups. Specialized in product strategy and scaling teams.",
+                avatar: "ZA",
+                type: "professional",
+                rating: 4.9,
+                reviewCount: 127,
+                reviews: [
+                    { text: "Sarah's pitch feedback transformed my startup presentation completely. Her insights were spot-on!", author: "Rahul M." },
+                    { text: "Incredible session! She helped me identify key market gaps I hadn't considered in my pitch.", author: "Priya S." }
+                ]
+            },
+            {
+                name: "Anfal",
+                expertise: "AI & Machine Learning",
+                experience: "15+",
+                industry: "tech",
+                liveRate: 1199,
+                fileRate: 299,
+                bio: "AI researcher turned entrepreneur. Built and sold 2 AI companies. Expert in technical product development.",
+                avatar: "AN",
+                type: "professional",
+                rating: 4.8,
+                reviewCount: 89,
+                reviews: [
+                    { text: "Michael's technical depth helped me strengthen my AI product pitch significantly.", author: "Amit K." },
+                    { text: "Great feedback for deep tech pitches. Very practical advice on communicating complex concepts.", author: "Neha R." }
+                ]
+            },
+            {
+                name: "R Keerthana",
+                expertise: "Digital Marketing",
+                experience: "5-10",
+                industry: "marketing",
+                liveRate: 1199,
+                fileRate: 299,
+                bio: "Growth marketing expert who scaled 5 startups from 0 to $10M+ ARR. Specializes in user acquisition.",
+                avatar: "RK",
+                type: "professional",
+                rating: 4.9,
+                reviewCount: 156,
+                reviews: [
+                    { text: "Emily's growth strategies transformed how I presented my user acquisition model!", author: "Karan T." },
+                    { text: "She knows exactly how to position products for maximum market impact in pitches.", author: "Sneha P." }
+                ]
+            },
+            {
+                name: "Shihaam",
+                expertise: "Fintech & Banking",
+                experience: "15+",
+                industry: "finance",
+                liveRate: 1199,
+                fileRate: 299,
+                bio: "Former Goldman Sachs MD, now fintech investor. Deep expertise in financial products and regulations.",
+                avatar: "SH",
+                type: "professional",
+                rating: 4.7,
+                reviewCount: 73,
+                reviews: [
+                    { text: "David's fintech expertise helped me address regulatory concerns in my pitch.", author: "Vikram A." },
+                    { text: "Excellent insights on financial product pitching and investor expectations.", author: "Anjali M." }
+                ]
+            },
+            {
+                name: "Girik Gagwani",
+                expertise: "UX/UI Design",
+                experience: "5-10",
+                industry: "design",
+                liveRate: 1199,
+                fileRate: 299,
+                bio: "Design lead at Airbnb, created award-winning user experiences. Passionate about design thinking.",
+                avatar: "GG",
+                type: "professional",
+                rating: 4.9,
+                reviewCount: 142,
+                reviews: [
+                    { text: "Lisa helped me visualize my app concept much better in my pitch deck!", author: "Rohan G." },
+                    { text: "Her design thinking approach improved my product demonstration significantly.", author: "Divya L." }
+                ]
+            },
+            {
+                name: "Ayush",
+                expertise: "E-commerce",
+                experience: "10-15",
+                industry: "tech",
+                liveRate: 1199,
+                fileRate: 299,
+                bio: "Built and sold 3 e-commerce companies. Expert in marketplace dynamics and customer experience.",
+                avatar: "AY",
+                type: "professional",
+                rating: 4.8,
+                reviewCount: 98,
+                reviews: [
+                    { text: "Robert's e-commerce insights made my marketplace pitch much more compelling.", author: "Shreya B." },
+                    { text: "Great feedback on customer acquisition and retention strategies for my pitch.", author: "Arjun V." }
+                ]
+            },
+            
+            // College Seniors
+            {
+                name: "Arjun Sharma",
+                expertise: "Campus Startups",
+                experience: "Student",
+                industry: "tech",
+                liveRate: 400,
+                fileRate: 119,
+                bio: "IIT Delhi Final Year, Co-founder of campus food delivery startup. Won multiple hackathons and pitch competitions.",
+                avatar: "AS",
+                type: "senior",
+                college: "IIT Delhi",
+                rating: 4.6,
+                reviewCount: 45,
+                reviews: [
+                    { text: "Arjun knows what works in student pitch competitions. Great practical advice!", author: "Ravi M." },
+                    { text: "His startup experience really shows. Helped me avoid common pitch mistakes.", author: "Pooja K." }
+                ]
+            },
+            {
+                name: "Priya Patel",
+                expertise: "Product Management",
+                experience: "Student",
+                industry: "tech",
+                liveRate: 350,
+                fileRate: 89,
+                bio: "NIT Surat, Product Manager Intern at Flipkart. Built 3 successful college projects, mentored 20+ juniors.",
+                avatar: "PP",
+                type: "senior",
+                college: "NIT Surat",
+                rating: 4.7,
+                reviewCount: 38,
+                reviews: [
+                    { text: "Priya's product insights made my pitch much more compelling. She knows what works!", author: "Manish S." },
+                    { text: "Great feedback for communicating product-market fit in pitches. Very relatable!", author: "Kavya R." }
+                ]
+            },
+            {
+                name: "Rohit Kumar",
+                expertise: "Tech & Innovation",
+                experience: "Student",
+                industry: "tech",
+                liveRate: 300,
+                fileRate: 79,
+                bio: "BITS Pilani Senior, Google Summer of Code participant. Founded college tech society, organized 10+ workshops.",
+                avatar: "RK",
+                type: "senior",
+                college: "BITS Pilani",
+                rating: 4.5,
+                reviewCount: 32,
+                reviews: [
+                    { text: "Rohit's technical guidance helped me explain my MVP better in my pitch.", author: "Sanjay L." },
+                    { text: "Very approachable and explains how to pitch complex tech concepts clearly.", author: "Meera T." }
+                ]
+            },
+            
+            // Club Presidents
+            {
+                name: "Ananya Singh",
+                expertise: "Entrepreneurship Club",
+                experience: "Student Leader",
+                industry: "business",
+                liveRate: 250,
+                fileRate: 79,
+                bio: "President, Entrepreneurship Cell, IIM Bangalore. Organized startup weekend, connected 100+ students with VCs.",
+                avatar: "ANS",
+                type: "president",
+                college: "IIM Bangalore",
+                position: "E-Cell President",
+                rating: 4.8,
+                reviewCount: 67,
+                reviews: [
+                    { text: "Ananya's business acumen helped me structure my pitch for maximum impact!", author: "Deepak N." },
+                    { text: "She helped me create a winning business model pitch. Very knowledgeable!", author: "Rashmi P." }
+                ]
+            },
+            {
+                name: "Vikash Agarwal",
+                expertise: "Business Strategy",
+                experience: "Student Leader",
+                industry: "business",
+                liveRate: 200,
+                fileRate: 79,
+                bio: "President, Business Club, SRCC Delhi. Led team that won national B-plan competition, mentored 50+ pitches.",
+                avatar: "VA",
+                type: "president",
+                college: "SRCC Delhi",
+                position: "Business Club President",
+                rating: 4.6,
+                reviewCount: 41,
+                reviews: [
+                    { text: "Vikash knows how to win pitch competitions. His tips were game-changing!", author: "Nidhi G." },
+                    { text: "Excellent guidance on presentation skills and business pitch strategy.", author: "Karthik M." }
+                ]
+            },
+            {
+                name: "Sneha Reddy",
+                expertise: "Innovation & Design",
+                experience: "Student Leader",
+                industry: "design",
+                liveRate: 300,
+                fileRate: 79,
+                bio: "President, Design Thinking Club, NID Ahmedabad. Won multiple design challenges, conducted 15+ workshops.",
+                avatar: "SR",
+                type: "president",
+                college: "NID Ahmedabad",
+                position: "Design Club President",
+                rating: 4.7,
+                reviewCount: 29,
+                reviews: [
+                    { text: "Sneha's design thinking approach completely changed how I pitch my solutions!", author: "Aditya J." },
+                    { text: "Creative and insightful feedback on making pitches more engaging and visual.", author: "Tanvi S." }
+                ]
+            }
+        ];
+
+        // Theme toggle functionality (using variables instead of localStorage)
+        let isDarkMode = false;
+        
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            isDarkMode = !isDarkMode;
+            
+            if (isDarkMode) {
+                body.classList.add('dark');
+                themeToggle.textContent = '☀️';
+            } else {
+                body.classList.remove('dark');
+                themeToggle.textContent = '🌙';
+            }
+        }
+
+        // Initialize theme on page load
+        function initializeTheme() {
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.textContent = '🌙';
+        }
+
+        // Generate star rating HTML
+        function generateStars(rating) {
+            let starsHtml = '<div class="stars">';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    starsHtml += '<span class="star">★</span>';
+                } else if (i - 0.5 <= rating) {
+                    starsHtml += '<span class="star">☆</span>';
+                } else {
+                    starsHtml += '<span class="star empty">☆</span>';
+                }
+            }
+            starsHtml += '</div>';
+            return starsHtml;
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            renderMentors(mentors);
+        });
+
+        // Filter functionality
+        function applyFilters() {
+            const priceRange = document.getElementById('priceRange').value;
+            const industry = document.getElementById('industry').value;
+            const searchName = document.getElementById('searchName').value.toLowerCase();
+
+            let filteredMentors = mentors.filter(mentor => {
+                // Price range filter (using live session rates)
+                if (priceRange) {
+                    const price = mentor.liveRate;
+                    if (priceRange === '0-300' && price > 300) return false;
+                    if (priceRange === '301-600' && (price <= 300 || price > 600)) return false;
+                    if (priceRange === '601+' && price <= 600) return false;
+                }
+
+                // Industry filter
+                if (industry && mentor.industry !== industry) return false;
+
+                // Name/expertise search filter
+                if (searchName && !mentor.name.toLowerCase().includes(searchName) && !mentor.expertise.toLowerCase().includes(searchName)) return false;
+
+                return true;
+            });
+
+            renderMentors(filteredMentors);
+        }
+
+        // Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update nav links (only if it's a main nav item)
+            if (['home', 'mentors', 'my-pitches'].includes(pageId)) {
+                const navLinks = document.querySelectorAll('.nav-links a');
+                navLinks.forEach(link => link.classList.remove('active'));
+                
+                // Find and activate the correct nav link
+                const targetLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+                if (targetLink) {
+                    targetLink.classList.add('active');
+                }
+            }
+        }
+
+        // Render mentors
+        function renderMentors(mentorsToRender) {
+            const grid = document.getElementById('mentorsGrid');
+            grid.innerHTML = '';
+            
+            if (mentorsToRender.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #64748b;"><h3>No pitch experts found</h3><p>Try adjusting your filters to see more results.</p></div>';
+                return;
+            }
+            
+            mentorsToRender.forEach(mentor => {
+                const typeLabel = mentor.type === 'professional' ? 'Industry Pro' : 
+                                mentor.type === 'senior' ? 'College Senior' : 'Club President';
+                const collegeInfo = mentor.college ? `<div class="mentor-college">${mentor.college}${mentor.position ? ' • ' + mentor.position : ''}</div>` : '';
+                
+                // Generate reviews HTML
+                const reviewsHtml = mentor.reviews.map(review => 
+                    `<div class="review-item">
+                        <div class="review-text">"${review.text}"</div>
+                        <div class="review-author">- ${review.author}</div>
+                    </div>`
+                ).join('');
+                
+                const mentorCard = `
+                    <div class="mentor-card">
+                        <div class="mentor-avatar">${mentor.avatar}</div>
+                        <div class="mentor-info">
+                            <div class="mentor-type ${mentor.type}">${typeLabel}</div>
+                            <h3>${mentor.name}</h3>
+                            <div class="mentor-expertise">${mentor.expertise}</div>
+                            ${collegeInfo}
+                            <div class="mentor-rating">
+                                ${generateStars(mentor.rating)}
+                                <span class="rating-text">${mentor.rating} (${mentor.reviewCount} reviews)</span>
+                            </div>
+                            <div class="mentor-rate">
+                                <div style="margin-bottom: 0.25rem;">Live Pitch Review: ₹${mentor.liveRate}</div>
+                                <div style="font-size: 0.9rem; color: #64748b;">File Review: ₹${mentor.fileRate}</div>
+                            </div>
+                            <div class="mentor-bio">${mentor.bio}</div>
+                            <div class="mentor-reviews">
+                                ${reviewsHtml}
+                            </div>
+                            <button class="btn btn-primary" onclick="selectMentor('${mentor.name}', ${mentor.liveRate}, ${mentor.fileRate})">Pitch to ${mentor.name.split(' ')[0]}</button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += mentorCard;
+            });
+        }
+
+        // Select mentor and go to booking
+        function selectMentor(mentorName, liveRate, fileRate) {
+            // Store selected mentor info
+            window.selectedMentor = {name: mentorName, liveRate: liveRate, fileRate: fileRate};
+            showPage('booking');
+            
+            // Update pricing based on default live session
+            updatePricing(liveRate);
+        }
+
+        // Pitch option selection
+        let selectedPitchMethod = null;
+        function selectPitchOption(method) {
+            selectedPitchMethod = method;
+            
+            // Update UI
+            document.querySelectorAll('.pitch-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.closest('.pitch-option').classList.add('selected');
+            
+            // Show/hide file upload and calendar sections
+            const fileUpload = document.getElementById('fileUpload');
+            const calendarSection = document.getElementById('calendarSection');
+            const fileOnlyMessage = document.getElementById('fileOnlyMessage');
+            const schedulingTitle = document.getElementById('schedulingTitle');
+            
+            if (method === 'file') {
+                fileUpload.style.display = 'block';
+                calendarSection.style.display = 'none';
+                fileOnlyMessage.style.display = 'block';
+                schedulingTitle.textContent = 'Review Details';
+                
+                // Update pricing for file review
+                if (window.selectedMentor) {
+                    updatePricing(window.selectedMentor.fileRate);
+                }
+            } else {
+                fileUpload.style.display = 'none';
+                calendarSection.style.display = 'block';
+                fileOnlyMessage.style.display = 'none';
+                schedulingTitle.textContent = 'Select Date & Time';
+                
+                // Update pricing for live session
+                if (window.selectedMentor) {
+                    updatePricing(window.selectedMentor.liveRate);
+                }
+            }
+        }
+
+        // Update pricing function
+        function updatePricing(rate) {
+            const platformFee = Math.round(rate * 0.1);
+            const total = rate + platformFee;
+            
+            document.getElementById('sessionFee').textContent = `₹${rate}`;
+            document.getElementById('platformFee').textContent = `₹${platformFee}`;
+            document.getElementById('totalFee').textContent = `₹${total}`;
+        }
+
+        // Calendar functions
+        function selectDate(element) {
+            // Remove previous selection
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.classList.remove('selected');
+            });
+            
+            // Select current day
+            element.classList.add('selected');
+            
+            // Show time slots
+            document.getElementById('timeSlots').style.display = 'grid';
+        }
+
+        function selectTime(element) {
+            // Remove previous selection
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            
+            // Select current time
+            element.classList.add('selected');
+        }
+
+        // Payment processing
+        function processPayment() {
+            // Collect all booking details
+            const selectedDate = document.querySelector('.calendar-day.selected');
+            const selectedTime = document.querySelector('.time-slot.selected');
+            
+            // For file reviews, date/time selection is not required
+            if (selectedPitchMethod === 'live') {
+                if (!selectedDate || !selectedTime || !selectedPitchMethod || !window.selectedMentor) {
+                    alert('Please complete all booking details before proceeding.');
+                    return;
+                }
+            } else if (selectedPitchMethod === 'file') {
+                if (!selectedPitchMethod || !window.selectedMentor) {
+                    alert('Please select a pitch review method and upload your file before proceeding.');
+                    return;
+                }
+            } else {
+                alert('Please select a pitch review method before proceeding.');
+                return;
+            }
+
+            // Store booking details
+            window.bookingDetails = {
+                mentor: window.selectedMentor,
+                date: selectedDate ? selectedDate.textContent : 'N/A',
+                time: selectedTime ? selectedTime.textContent : 'N/A',
+                sessionType: selectedPitchMethod,
+                sessionFee: document.getElementById('sessionFee').textContent,
+                platformFee: document.getElementById('platformFee').textContent,
+                total: document.getElementById('totalFee').textContent
+            };
+
+            // Show confirmation page
+            showConfirmationPage();
+        }
+
+        // Show confirmation page with booking details
+        function showConfirmationPage() {
+            const details = window.bookingDetails;
+            const mentor = mentors.find(m => m.name === details.mentor.name);
+            
+            // Update confirmation page content
+            document.getElementById('confirmMentorAvatar').textContent = mentor.avatar;
+            document.getElementById('confirmMentorName').textContent = mentor.name;
+            document.getElementById('confirmMentorExpertise').textContent = mentor.expertise;
+            
+            // Session details
+            document.getElementById('confirmSessionType').textContent = 
+                details.sessionType === 'live' ? '🎥 Live Pitch Session' : '📄 Pitch Deck Review';
+            
+            // Handle date/time display for different session types
+            if (details.sessionType === 'live') {
+                document.getElementById('confirmDate').textContent = `September ${details.date}, 2025`;
+                document.getElementById('confirmTime').textContent = details.time;
+                document.getElementById('confirmDuration').textContent = '45-60 minutes';
+            } else {
+                document.getElementById('confirmDate').textContent = 'Asynchronous Review';
+                document.getElementById('confirmTime').textContent = 'No specific time';
+                document.getElementById('confirmDuration').textContent = '24-48 hours turnaround';
+            }
+            
+            // Payment details
+            document.getElementById('confirmSessionFee').textContent = details.sessionFee;
+            document.getElementById('confirmPlatformFee').textContent = details.platformFee;
+            document.getElementById('confirmTotal').textContent = details.total;
+            
+            // Update next steps based on session type
+            const nextStepInfo = document.getElementById('nextStepInfo');
+            if (details.sessionType === 'live') {
+                nextStepInfo.textContent = 'Zoom link will be sent 30 minutes before the pitch session';
+            } else {
+                nextStepInfo.textContent = 'Upload your pitch files and receive detailed feedback within 24-48 hours';
+            }
+            
+            // Show confirmation page
+            showPage('confirmation');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+            showPage('confirmation');
+        }
+
+        // Mobile menu toggle (for future enhancement)
+        function toggleMobileMenu() {
+            // Implementation for mobile menu toggle
+            console.log('Mobile menu toggle');
+        }
+
+        // Initialize page
+        function init() {
+            // Set up event listeners and initial state
+            console.log('UpStride pitch platform initialized');
+        }
+
+        // Call init when page loads
+        init();
+    </script>
+</body>
+</html>
