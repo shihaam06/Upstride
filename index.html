@@ -48,13 +48,15 @@
         body.dark .filters,
         body.dark .sessions-list,
         body.dark .stat-card,
-        body.dark .modal-content {
+        body.dark .modal-content,
+        body.dark .idea-card {
             background: #1e293b;
             color: #e2e8f0;
         }
 
         body.dark .benefit-card h3,
-        body.dark .mentor-info h3 {
+        body.dark .mentor-info h3,
+        body.dark .idea-title {
             color: #e2e8f0;
         }
 
@@ -79,6 +81,62 @@
 
         body.dark .session-item {
             border-color: #334155;
+        }
+
+        body.dark .form-group label {
+            color: #e2e8f0;
+        }
+
+        body.dark .form-group input,
+        body.dark .form-group textarea,
+        body.dark .form-group select {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        body.dark .nda-content {
+            background: #334155;
+            border-color: #475569;
+        }
+
+        body.dark .nda-checkbox {
+            background: #1e40af20;
+        }
+
+        body.dark .mentor-bio,
+        body.dark .rating-text,
+        body.dark .idea-preview {
+            color: #94a3b8;
+        }
+
+        body.dark .review-item {
+            background: #334155;
+        }
+
+        body.dark .review-text {
+            color: #94a3b8;
+        }
+
+        body.dark .review-author {
+            color: #64748b;
+        }
+
+        body.dark .confirmation-card {
+            background: #1e293b;
+        }
+
+        body.dark .detail-row {
+            border-color: #334155;
+        }
+
+        body.dark .payment-summary {
+            background: #334155;
+        }
+
+        body.dark .next-steps {
+            background: #1e40af20;
+            border-color: #1e40af40;
         }
 
         .container {
@@ -462,21 +520,135 @@
             font-weight: 500;
         }
 
-        body.dark .mentor-bio,
-        body.dark .rating-text {
-            color: #94a3b8;
+        /* Idea Card Styles */
+        .idea-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        body.dark .review-item {
-            background: #334155;
+        .idea-card:hover {
+            transform: translateY(-3px);
         }
 
-        body.dark .review-text {
-            color: #94a3b8;
+        .idea-card.locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            opacity: 0.5;
         }
 
-        body.dark .review-author {
+        .idea-category {
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.75rem;
+        }
+
+        .idea-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .idea-preview {
             color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .idea-stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .idea-price {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.25rem;
+        }
+
+        /* NDA Modal Styles */
+        .nda-content {
+            max-height: 400px;
+            overflow-y: auto;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            border: 2px solid #e5e7eb;
+        }
+
+        .nda-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #eff6ff;
+            border-radius: 8px;
+        }
+
+        .nda-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
         }
 
         /* Confirmation Page Styles */
@@ -486,10 +658,6 @@
             padding: 2.5rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
-        }
-
-        body.dark .confirmation-card {
-            background: #1e293b;
         }
 
         .success-icon {
@@ -512,10 +680,6 @@
             border-top: 1px solid #f1f5f9;
         }
 
-        body.dark .detail-row {
-            border-color: #334155;
-        }
-
         .payment-summary {
             background: #f8fafc;
             padding: 1.5rem;
@@ -523,20 +687,11 @@
             margin-bottom: 2rem;
         }
 
-        body.dark .payment-summary {
-            background: #334155;
-        }
-
         .next-steps {
             background: #eff6ff;
             border: 1px solid #bfdbfe;
             border-radius: 8px;
             padding: 1.5rem;
-        }
-
-        body.dark .next-steps {
-            background: #1e40af20;
-            border-color: #1e40af40;
         }
 
         /* Booking Page */
@@ -686,11 +841,6 @@
             color: #065f46;
         }
 
-        .status-paid {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
         /* Modal */
         .modal {
             display: none;
@@ -777,6 +927,7 @@
                 <ul class="nav-links">
                     <li><a href="#" onclick="showPage('home')" class="active">Home</a></li>
                     <li><a href="#" onclick="showPage('mentors')">Pitch Your Idea</a></li>
+                    <li><a href="#" onclick="showPage('idea-marketplace')">Idea Marketplace</a></li>
                     <li><a href="#" onclick="showPage('my-pitches')">My Pitches</a></li>
                     <li><button class="theme-toggle" onclick="toggleTheme()">🌙</button></li>
                 </ul>
@@ -860,6 +1011,24 @@
             <!-- Mentors Grid -->
             <div class="mentors-grid" id="mentorsGrid">
                 <!-- Mentor cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea Marketplace Page -->
+    <div id="idea-marketplace" class="page">
+        <div class="container">
+            <h2 style="text-align: center; margin: 3rem 0; font-size: 2.5rem; color: #1f2937;">Idea Marketplace</h2>
+            <p style="text-align: center; color: #64748b; margin-bottom: 3rem; font-size: 1.1rem;">Browse innovative ideas, unlock full details, and provide valuable feedback</p>
+            
+            <!-- Post Idea Button -->
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <button class="btn btn-primary" onclick="openPostIdeaModal()">📝 Post Your Idea</button>
+            </div>
+
+            <!-- Ideas Grid -->
+            <div class="mentors-grid" id="ideasGrid">
+                <!-- Idea cards will be populated by JavaScript -->
             </div>
         </div>
     </div>
@@ -1120,8 +1289,354 @@
         </div>
     </div>
 
+    <!-- Post Idea Modal -->
+    <div id="postIdeaModal" class="modal">
+        <div class="modal-content" style="max-width: 600px; text-align: left;">
+            <h2 style="color: #1f2937; margin-bottom: 1.5rem; text-align: center;">Post Your Idea</h2>
+            
+            <form onsubmit="submitIdea(event)">
+                <div class="form-group">
+                    <label for="ideaTitle">Idea Title *</label>
+                    <input type="text" id="ideaTitle" required maxlength="100" placeholder="Enter a catchy title for your idea">
+                </div>
+
+                <div class="form-group">
+                    <label for="ideaCategory">Category *</label>
+                    <select id="ideaCategory" required>
+                        <option value="">Select a category</option>
+                        <option value="tech">Technology & Apps</option>
+                        <option value="business">Business & Services</option>
+                        <option value="finance">Finance & Fintech</option>
+                        <option value="design">Design & Creative</option>
+                        <option value="marketing">Marketing & Growth</option>
+                        <option value="social">Social Impact</option>
+                        <option value="health">Health & Wellness</option>
+                        <option value="education">Education</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ideaBrief">Brief Overview (Public) *</label>
+                    <textarea id="ideaBrief" required maxlength="200" placeholder="Write a teaser that will be visible to everyone..." oninput="updateCharCount('ideaBrief', 200)"></textarea>
+                    <div class="char-count"><span id="ideaBriefCount">0</span>/200</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ideaFull">Full Details (Paid Access) *</label>
+                    <textarea id="ideaFull" required maxlength="2000" placeholder="Describe your idea in detail - problem, solution, target market, business model, etc." style="min-height: 150px;" oninput="updateCharCount('ideaFull', 2000)"></textarea>
+                    <div class="char-count"><span id="ideaFullCount">0</span>/2000</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ideaPrice">Unlock Price (₹) *</label>
+                    <input type="number" id="ideaPrice" required min="49" max="999" value="99" placeholder="49">
+                    <small style="color: #64748b;">Minimum ₹49, Maximum ₹999</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="ideaStage">Development Stage *</label>
+                    <select id="ideaStage" required>
+                        <option value="">Select stage</option>
+                        <option value="concept">Just an Idea/Concept</option>
+                        <option value="research">Market Research Phase</option>
+                        <option value="prototype">Prototype/MVP Ready</option>
+                        <option value="testing">Beta Testing</option>
+                        <option value="launched">Launched</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" class="btn btn-outline" onclick="closePostIdeaModal()" style="flex: 1;">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Post Idea</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- NDA Modal -->
+    <div id="ndaModal" class="modal">
+        <div class="modal-content" style="max-width: 700px; text-align: left;">
+            <h2 style="color: #1f2937; margin-bottom: 1rem; text-align: center;">Non-Disclosure Agreement</h2>
+            <p style="text-align: center; color: #64748b; margin-bottom: 1.5rem;">Please read and accept the terms before viewing this idea</p>
+            
+            <div class="nda-content">
+                <h3 style="color: #1e293b; margin-bottom: 1rem;">Confidentiality and Non-Disclosure Terms</h3>
+                
+                <p style="margin-bottom: 1rem;"><strong>1. Confidential Information</strong><br>
+                By accessing this idea, you acknowledge that all information disclosed is confidential and proprietary to the idea creator.</p>
+                
+                <p style="margin-bottom: 1rem;"><strong>2. Non-Disclosure Obligation</strong><br>
+                You agree not to disclose, reproduce, share, or distribute any part of this idea to any third party without explicit written permission from the creator.</p>
+                
+                <p style="margin-bottom: 1rem;"><strong>3. Non-Compete Clause</strong><br>
+                <span style="background: #fef3c7; padding: 2px 6px; border-radius: 4px; font-weight: 600;">You explicitly agree NOT to copy, replicate, or implement this idea for your own commercial benefit or any purpose whatsoever.</span> This includes creating similar products, services, or business models based on this idea.</p>
+                
+                <p style="margin-bottom: 1rem;"><strong>4. Feedback Purpose Only</strong><br>
+                Access to this idea is granted solely for the purpose of providing constructive feedback to the creator. You may not use this information for any other purpose.</p>
+                
+                <p style="margin-bottom: 1rem;"><strong>5. Legal Consequences</strong><br>
+                Violation of this agreement may result in legal action and you may be held liable for damages, including but not limited to financial losses and legal fees.</p>
+                
+                <p style="margin-bottom: 1rem;"><strong>6. Duration</strong><br>
+                This agreement remains in effect indefinitely, even after you have provided feedback or your interaction with the creator has ended.</p>
+                
+                <p style="margin-bottom: 1rem;"><strong>7. Jurisdiction</strong><br>
+                This agreement shall be governed by the laws of India. Any disputes arising from this agreement shall be subject to the exclusive jurisdiction of courts in Bangalore, Karnataka.</p>
+                
+                <p style="margin-bottom: 0;"><strong>8. Acknowledgment</strong><br>
+                By checking the box below, you confirm that you have read, understood, and agree to be legally bound by all terms of this Non-Disclosure Agreement.</p>
+            </div>
+
+            <div class="nda-checkbox">
+                <input type="checkbox" id="ndaAccept" onchange="toggleNdaButton()">
+                <label for="ndaAccept" style="margin: 0; cursor: pointer; font-weight: 600; color: #1e40af;">
+                    I have read and agree to the Non-Disclosure Agreement. I will NOT copy or implement this idea.
+                </label>
+            </div>
+
+            <div style="background: #fef3c7; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #f59e0b;">
+                <strong style="color: #92400e;">⚠️ Important:</strong>
+                <p style="color: #92400e; margin: 0.5rem 0 0 0; font-size: 0.9rem;">This is a legally binding agreement. By proceeding, you acknowledge that copying or implementing this idea without permission may result in legal action.</p>
+            </div>
+
+            <div style="display: flex; gap: 1rem;">
+                <button type="button" class="btn btn-outline" onclick="closeNdaModal()" style="flex: 1;">Decline & Go Back</button>
+                <button type="button" class="btn btn-primary" id="ndaAcceptBtn" onclick="acceptNdaAndPay()" style="flex: 1;" disabled>Accept & Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Idea Details Modal -->
+    <div id="ideaDetailsModal" class="modal">
+        <div class="modal-content" style="max-width: 700px; text-align: left;">
+            <h2 id="detailIdeaTitle" style="color: #1f2937; margin-bottom: 1rem;"></h2>
+            <div id="detailIdeaCategory" style="margin-bottom: 1rem;"></div>
+            
+            <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <h3 style="color: #1e293b; margin-bottom: 1rem;">Full Idea Details</h3>
+                <p id="detailIdeaFull" style="color: #374151; line-height: 1.6; white-space: pre-wrap;"></p>
+            </div>
+
+            <div style="background: #eff6ff; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                <h3 style="color: #1e40af; margin-bottom: 1rem;">💬 Provide Your Feedback</h3>
+                <textarea id="feedbackText" placeholder="Share your thoughts, suggestions, and constructive feedback..." style="width: 100%; min-height: 120px; padding: 12px; border: 2px solid #bfdbfe; border-radius: 8px; font-family: inherit;"></textarea>
+                <button class="btn btn-primary" onclick="submitFeedback()" style="margin-top: 1rem; width: 100%;">Submit Feedback</button>
+            </div>
+
+            <button type="button" class="btn btn-outline" onclick="closeIdeaDetailsModal()" style="width: 100%;">Close</button>
+        </div>
+    </div>
+
     <script>
-        
+        // Sample ideas data
+        const ideas = [
+            {
+                id: 1,
+                title: "AI-Powered College Notes Sharing Platform",
+                category: "tech",
+                categoryName: "Technology & Apps",
+                brief: "A platform where students can share and access high-quality college notes, automatically organized by subject and semester with AI verification...",
+                fullDetails: `Problem: Students waste countless hours creating notes or struggle to find quality study materials during exams.
+
+Solution: An AI-powered platform that:
+- Allows students to upload and share notes
+- Uses AI to verify quality and accuracy
+- Organizes content by college, subject, and semester
+- Rewards contributors with credits
+- Offers premium curated notes by toppers
+
+Target Market: 50M+ college students in India
+Business Model: Freemium (basic access free, premium notes ₹99/month)
+Competitive Advantage: AI quality verification, gamification for contributors
+Monetization: Subscriptions, college partnerships, advertising
+
+Stage: Prototype ready, 500 beta users
+Funding Needed: ₹15L for development and marketing`,
+                price: 99,
+                stage: "prototype",
+                views: 234,
+                unlocks: 12,
+                postedBy: "Rahul M.",
+                postedDate: "2 days ago"
+            },
+            {
+                id: 2,
+                title: "Hyperlocal Tiffin Service Aggregator",
+                category: "business",
+                categoryName: "Business & Services",
+                brief: "Connect home chefs and small tiffin services with working professionals and students through a hyperlocal delivery platform...",
+                fullDetails: `Problem: Working professionals and students struggle to find affordable, homely, and healthy meal options. Home chefs lack a platform to reach customers.
+
+Solution: A hyperlocal app that:
+- Connects verified home chefs with customers within 3km radius
+- Offers monthly subscription plans for daily meals
+- Quality checks and ratings system
+- Flexible meal plans (breakfast/lunch/dinner)
+- Direct connection between chef and customer
+
+Target Market: 10M+ working professionals in tier 1 cities
+Business Model: 15% commission on subscriptions
+USP: Home-cooked food quality at tiffin prices, reliable monthly subscriptions
+Market Size: ₹500Cr+ addressable market in top 8 cities
+
+Current Status: 50 home chefs onboarded in Bangalore, 200 active subscribers
+Monthly Revenue: ₹80,000
+Funding Ask: ₹25L for expansion to 3 more cities`,
+                price: 149,
+                stage: "launched",
+                views: 456,
+                unlocks: 28,
+                postedBy: "Priya S.",
+                postedDate: "5 days ago"
+            },
+            {
+                id: 3,
+                title: "Campus Event Discovery & Ticketing App",
+                category: "tech",
+                categoryName: "Technology & Apps",
+                brief: "One-stop platform for discovering and booking tickets to all college festivals, technical events, and cultural programs across India...",
+                fullDetails: `Problem: Students miss out on exciting events happening in nearby colleges. Event organizers struggle with marketing and ticketing.
+
+Solution: Mobile app that:
+- Lists all upcoming college events in your city
+- Easy ticket booking and QR code entry
+- Social features to find friends attending
+- College fest rankings and reviews
+- Event organizer dashboard for management
+
+Target Audience: 15M+ college students interested in inter-college events
+Revenue Streams:
+1. Ticketing commission (10%)
+2. Featured listings for colleges (₹5000/event)
+3. Sponsor connections (15% commission)
+
+Differentiation: Focus only on college events, strong social features
+Competition: BookMyShow (too broad), Insider (expensive)
+
+Traction: Beta launched in Bangalore and Pune, 2000+ users
+Next Steps: Expand to Delhi, Mumbai, Chennai, raise seed funding`,
+                price: 79,
+                stage: "testing",
+                views: 189,
+                unlocks: 8,
+                postedBy: "Amit K.",
+                postedDate: "1 week ago"
+            },
+            {
+                id: 4,
+                title: "Sustainable Fashion Rental Marketplace",
+                category: "business",
+                categoryName: "Business & Services",
+                brief: "Rent designer and branded clothes for special occasions at 10% of retail price. Reduce fashion waste while looking great...",
+                fullDetails: `Problem: 
+- People buy expensive clothes for single occasions
+- Fast fashion creates massive environmental waste
+- Students/young professionals want branded wear but can't afford
+
+Solution: Online rental marketplace where users can:
+- Rent designer outfits for 3-7 days at 10-15% retail price
+- List their own branded clothes for rental
+- Professional cleaning and quality assurance
+- Try before you buy option
+- Sustainable fashion choice
+
+Market Opportunity: ₹1000Cr+ sustainable fashion market growing at 35% CAGR
+Target Users: Women 18-35, tier 1 cities, occasions: weddings, parties, interviews
+
+Business Model:
+- 30% commission on rentals
+- Cleaning service charges
+- Styling consultation fees
+- Insurance on high-value items
+
+Current Status: 500 outfits listed, 120 active users in Bangalore
+Customer Acquisition: Instagram influencer partnerships
+Funding Need: ₹20L for inventory and 2 more city launches`,
+                price: 129,
+                stage: "testing",
+                views: 312,
+                unlocks: 19,
+                postedBy: "Sneha R.",
+                postedDate: "3 days ago"
+            },
+            {
+                id: 5,
+                title: "Mental Health Support Platform for Students",
+                category: "health",
+                categoryName: "Health & Wellness",
+                brief: "Anonymous peer support and affordable counseling for college students struggling with stress, anxiety, and mental health issues...",
+                fullDetails: `Problem: 1 in 3 students face mental health issues but don't seek help due to stigma and cost. Campus counseling has limited availability.
+
+Solution: Digital platform offering:
+- Anonymous peer support groups by college/issue
+- Affordable video counseling (₹199/session vs ₹2000 market rate)
+- AI-powered mood tracking and wellness tips
+- Emergency helpline integration
+- Resource library for self-help
+
+Why Now: Post-pandemic mental health awareness at all-time high
+Target: 30M+ college students in India
+Social Impact: Democratize mental health support
+
+Business Model:
+- Freemium (community free, counseling paid)
+- College partnerships (bulk sessions)
+- Corporate wellness programs
+
+Competitive Edge: Student-focused, affordable, anonymous
+Team: 2 psychology grads + 1 tech developer
+Validation: 1000+ beta users, 4.8 app rating
+
+Funding: ₹10L for licensed counselors and marketing`,
+                price: 149,
+                stage: "testing",
+                views: 267,
+                unlocks: 15,
+                postedBy: "Kavya T.",
+                postedDate: "4 days ago"
+            },
+            {
+                id: 6,
+                title: "Smart Hostel Mess Management System",
+                category: "tech",
+                categoryName: "Technology & Apps",
+                brief: "Digital platform to revolutionize hostel mess operations - menu voting, food waste tracking, complaint management, and billing...",
+                fullDetails: `Problem: Hostel mess food quality and management is a constant issue. No student feedback loop, high wastage, billing errors.
+
+Solution: SaaS platform for hostels providing:
+- Students vote on weekly menu in advance
+- Real-time feedback and ratings for each meal
+- Food waste analytics to optimize quantities
+- Automated billing and attendance tracking
+- Nutrition tracking for students
+- Mess management dashboard
+
+Target Market: 5000+ engineering college hostels, 50L+ hostel students
+B2B SaaS Model: ₹5000-15000/month per hostel based on size
+
+Value Proposition:
+- Colleges: Reduce complaints by 60%, cut waste by 40%
+- Students: Better food, voice in menu selection
+- Mess contractors: Data-driven operations
+
+Competitive Landscape: No direct competitor in India
+Technology: Web + mobile app, cloud-based
+Traction: 5 hostel pilots running, positive feedback
+
+Go-to-Market: Target tier 2-3 college hostels first (less competition)
+Funding: ₹18L for sales team and tech infrastructure`,
+                price: 99,
+                stage: "prototype",
+                views: 178,
+                unlocks: 9,
+                postedBy: "Arjun V.",
+                postedDate: "6 days ago"
+            }
+        ];
+
+        // Track unlocked ideas per session
+        let unlockedIdeas = new Set();
+
         // Sample mentor data
         const mentors = [
             // Industry Professionals
@@ -1344,7 +1859,7 @@
             }
         ];
 
-        // Theme toggle functionality (using variables instead of localStorage)
+        // Theme toggle functionality
         let isDarkMode = false;
         
         function toggleTheme() {
@@ -1362,7 +1877,6 @@
             }
         }
 
-        // Initialize theme on page load
         function initializeTheme() {
             const themeToggle = document.querySelector('.theme-toggle');
             themeToggle.textContent = '🌙';
@@ -1388,6 +1902,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             initializeTheme();
             renderMentors(mentors);
+            renderIdeas(ideas);
         });
 
         // Filter functionality
@@ -1397,7 +1912,6 @@
             const searchName = document.getElementById('searchName').value.toLowerCase();
 
             let filteredMentors = mentors.filter(mentor => {
-                // Price range filter (using live session rates)
                 if (priceRange) {
                     const price = mentor.liveRate;
                     if (priceRange === '0-300' && price > 300) return false;
@@ -1405,10 +1919,8 @@
                     if (priceRange === '601+' && price <= 600) return false;
                 }
 
-                // Industry filter
                 if (industry && mentor.industry !== industry) return false;
 
-                // Name/expertise search filter
                 if (searchName && !mentor.name.toLowerCase().includes(searchName) && !mentor.expertise.toLowerCase().includes(searchName)) return false;
 
                 return true;
@@ -1419,19 +1931,15 @@
 
         // Navigation
         function showPage(pageId) {
-            // Hide all pages
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
             
-            // Show selected page
             document.getElementById(pageId).classList.add('active');
             
-            // Update nav links (only if it's a main nav item)
-            if (['home', 'mentors', 'my-pitches'].includes(pageId)) {
+            if (['home', 'mentors', 'my-pitches', 'idea-marketplace'].includes(pageId)) {
                 const navLinks = document.querySelectorAll('.nav-links a');
                 navLinks.forEach(link => link.classList.remove('active'));
                 
-                // Find and activate the correct nav link
                 const targetLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
                 if (targetLink) {
                     targetLink.classList.add('active');
@@ -1454,7 +1962,6 @@
                                 mentor.type === 'senior' ? 'College Senior' : 'Club President';
                 const collegeInfo = mentor.college ? `<div class="mentor-college">${mentor.college}${mentor.position ? ' • ' + mentor.position : ''}</div>` : '';
                 
-                // Generate reviews HTML
                 const reviewsHtml = mentor.reviews.map(review => 
                     `<div class="review-item">
                         <div class="review-text">"${review.text}"</div>
@@ -1490,13 +1997,201 @@
             });
         }
 
+        // Render ideas
+        function renderIdeas(ideasToRender) {
+            const grid = document.getElementById('ideasGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            if (ideasToRender.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #64748b;"><h3>No ideas found</h3><p>Be the first to post an idea!</p></div>';
+                return;
+            }
+            
+            ideasToRender.forEach(idea => {
+                const isUnlocked = unlockedIdeas.has(idea.id);
+                const lockedClass = isUnlocked ? '' : 'locked';
+                
+                const ideaCard = `
+                    <div class="idea-card ${lockedClass}">
+                        <div class="idea-category">${idea.categoryName}</div>
+                        <h3 class="idea-title">${idea.title}</h3>
+                        <div class="idea-preview">${idea.brief}</div>
+                        
+                        <div class="idea-stats">
+                            <span>👁️ ${idea.views} views</span>
+                            <span>🔓 ${idea.unlocks} unlocked</span>
+                            <span>📅 ${idea.postedDate}</span>
+                        </div>
+                        
+                        ${!isUnlocked ? `
+                            <div class="idea-price">Unlock full details for ₹${idea.price}</div>
+                            <button class="btn btn-primary" onclick="openNdaModal(${idea.id})" style="width: 100%;">
+                                🔒 Unlock & View Details
+                            </button>
+                        ` : `
+                            <div style="background: #dcfce7; color: #166534; padding: 8px; border-radius: 6px; text-align: center; margin-bottom: 1rem; font-weight: 600;">
+                                ✓ Unlocked
+                            </div>
+                            <button class="btn btn-primary" onclick="viewIdeaDetails(${idea.id})" style="width: 100%;">
+                                View Full Details
+                            </button>
+                        `}
+                        
+                        <div style="margin-top: 0.75rem; font-size: 0.8rem; color: #64748b; text-align: center;">
+                            Posted by ${idea.postedBy} • ${idea.stage}
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += ideaCard;
+            });
+        }
+
+        // Post Idea Modal Functions
+        function openPostIdeaModal() {
+            document.getElementById('postIdeaModal').classList.add('active');
+        }
+
+        function closePostIdeaModal() {
+            document.getElementById('postIdeaModal').classList.remove('active');
+            document.querySelector('#postIdeaModal form').reset();
+            document.getElementById('ideaBriefCount').textContent = '0';
+            document.getElementById('ideaFullCount').textContent = '0';
+        }
+
+        function updateCharCount(fieldId, maxLength) {
+            const field = document.getElementById(fieldId);
+            const countSpan = document.getElementById(fieldId + 'Count');
+            countSpan.textContent = field.value.length;
+            
+            if (field.value.length >= maxLength) {
+                countSpan.style.color = '#dc2626';
+            } else {
+                countSpan.style.color = '#64748b';
+            }
+        }
+
+        function submitIdea(event) {
+            event.preventDefault();
+            
+            const newIdea = {
+                id: ideas.length + 1,
+                title: document.getElementById('ideaTitle').value,
+                category: document.getElementById('ideaCategory').value,
+                categoryName: document.getElementById('ideaCategory').options[document.getElementById('ideaCategory').selectedIndex].text,
+                brief: document.getElementById('ideaBrief').value,
+                fullDetails: document.getElementById('ideaFull').value,
+                price: parseInt(document.getElementById('ideaPrice').value),
+                stage: document.getElementById('ideaStage').value,
+                views: 0,
+                unlocks: 0,
+                postedBy: "You",
+                postedDate: "Just now"
+            };
+            
+            ideas.unshift(newIdea);
+            renderIdeas(ideas);
+            closePostIdeaModal();
+            
+            alert('🎉 Your idea has been posted successfully! It\'s now live in the marketplace.');
+            showPage('idea-marketplace');
+        }
+
+        // NDA Modal Functions
+        let currentIdeaId = null;
+
+        function openNdaModal(ideaId) {
+            currentIdeaId = ideaId;
+            document.getElementById('ndaModal').classList.add('active');
+            document.getElementById('ndaAccept').checked = false;
+            document.getElementById('ndaAcceptBtn').disabled = true;
+        }
+
+        function closeNdaModal() {
+            document.getElementById('ndaModal').classList.remove('active');
+            currentIdeaId = null;
+        }
+
+        function toggleNdaButton() {
+            const checkbox = document.getElementById('ndaAccept');
+            const button = document.getElementById('ndaAcceptBtn');
+            button.disabled = !checkbox.checked;
+        }
+
+        function acceptNdaAndPay() {
+            if (!currentIdeaId) return;
+            
+            const idea = ideas.find(i => i.id === currentIdeaId);
+            if (!idea) return;
+            
+            const confirmed = confirm(`Proceed to pay ₹${idea.price} to unlock "${idea.title}"?\n\nYou are agreeing to the NDA terms.`);
+            
+            if (confirmed) {
+                unlockedIdeas.add(currentIdeaId);
+                idea.unlocks += 1;
+                
+                closeNdaModal();
+                renderIdeas(ideas);
+                
+                setTimeout(() => {
+                    alert('✅ Payment successful! You can now view the full details.');
+                    viewIdeaDetails(currentIdeaId);
+                }, 300);
+            }
+        }
+
+        // View Idea Details
+        function viewIdeaDetails(ideaId) {
+            const idea = ideas.find(i => i.id === ideaId);
+            if (!idea) return;
+            
+            if (!unlockedIdeas.has(ideaId)) {
+                alert('Please unlock this idea first to view full details.');
+                return;
+            }
+            
+            idea.views += 1;
+            
+            document.getElementById('detailIdeaTitle').textContent = idea.title;
+            document.getElementById('detailIdeaCategory').innerHTML = `<span class="idea-category">${idea.categoryName}</span>`;
+            document.getElementById('detailIdeaFull').textContent = idea.fullDetails;
+            document.getElementById('feedbackText').value = '';
+            
+            window.currentViewingIdea = ideaId;
+            
+            document.getElementById('ideaDetailsModal').classList.add('active');
+        }
+
+        function closeIdeaDetailsModal() {
+            document.getElementById('ideaDetailsModal').classList.remove('active');
+            window.currentViewingIdea = null;
+        }
+
+        function submitFeedback() {
+            const feedback = document.getElementById('feedbackText').value.trim();
+            
+            if (!feedback) {
+                alert('Please write some feedback before submitting.');
+                return;
+            }
+            
+            if (feedback.length < 20) {
+                alert('Please provide more detailed feedback (at least 20 characters).');
+                return;
+            }
+            
+            alert('✅ Thank you for your feedback! The idea creator will receive your insights.');
+            document.getElementById('feedbackText').value = '';
+            closeIdeaDetailsModal();
+            
+            renderIdeas(ideas);
+        }
+
         // Select mentor and go to booking
         function selectMentor(mentorName, liveRate, fileRate) {
-            // Store selected mentor info
             window.selectedMentor = {name: mentorName, liveRate: liveRate, fileRate: fileRate};
             showPage('booking');
-            
-            // Update pricing based on default live session
             updatePricing(liveRate);
         }
 
@@ -1505,13 +2200,11 @@
         function selectPitchOption(method) {
             selectedPitchMethod = method;
             
-            // Update UI
             document.querySelectorAll('.pitch-option').forEach(option => {
                 option.classList.remove('selected');
             });
             event.target.closest('.pitch-option').classList.add('selected');
             
-            // Show/hide file upload and calendar sections
             const fileUpload = document.getElementById('fileUpload');
             const calendarSection = document.getElementById('calendarSection');
             const fileOnlyMessage = document.getElementById('fileOnlyMessage');
@@ -1523,7 +2216,6 @@
                 fileOnlyMessage.style.display = 'block';
                 schedulingTitle.textContent = 'Review Details';
                 
-                // Update pricing for file review
                 if (window.selectedMentor) {
                     updatePricing(window.selectedMentor.fileRate);
                 }
@@ -1533,14 +2225,12 @@
                 fileOnlyMessage.style.display = 'none';
                 schedulingTitle.textContent = 'Select Date & Time';
                 
-                // Update pricing for live session
                 if (window.selectedMentor) {
                     updatePricing(window.selectedMentor.liveRate);
                 }
             }
         }
 
-        // Update pricing function
         function updatePricing(rate) {
             const platformFee = Math.round(rate * 0.1);
             const total = rate + platformFee;
@@ -1552,35 +2242,27 @@
 
         // Calendar functions
         function selectDate(element) {
-            // Remove previous selection
             document.querySelectorAll('.calendar-day').forEach(day => {
                 day.classList.remove('selected');
             });
             
-            // Select current day
             element.classList.add('selected');
-            
-            // Show time slots
             document.getElementById('timeSlots').style.display = 'grid';
         }
 
         function selectTime(element) {
-            // Remove previous selection
             document.querySelectorAll('.time-slot').forEach(slot => {
                 slot.classList.remove('selected');
             });
             
-            // Select current time
             element.classList.add('selected');
         }
 
         // Payment processing
         function processPayment() {
-            // Collect all booking details
             const selectedDate = document.querySelector('.calendar-day.selected');
             const selectedTime = document.querySelector('.time-slot.selected');
             
-            // For file reviews, date/time selection is not required
             if (selectedPitchMethod === 'live') {
                 if (!selectedDate || !selectedTime || !selectedPitchMethod || !window.selectedMentor) {
                     alert('Please complete all booking details before proceeding.');
@@ -1596,7 +2278,6 @@
                 return;
             }
 
-            // Store booking details
             window.bookingDetails = {
                 mentor: window.selectedMentor,
                 date: selectedDate ? selectedDate.textContent : 'N/A',
@@ -1607,25 +2288,21 @@
                 total: document.getElementById('totalFee').textContent
             };
 
-            // Show confirmation page
             showConfirmationPage();
         }
 
-        // Show confirmation page with booking details
+        // Show confirmation page
         function showConfirmationPage() {
             const details = window.bookingDetails;
             const mentor = mentors.find(m => m.name === details.mentor.name);
             
-            // Update confirmation page content
             document.getElementById('confirmMentorAvatar').textContent = mentor.avatar;
             document.getElementById('confirmMentorName').textContent = mentor.name;
             document.getElementById('confirmMentorExpertise').textContent = mentor.expertise;
             
-            // Session details
             document.getElementById('confirmSessionType').textContent = 
                 details.sessionType === 'live' ? '🎥 Live Pitch Session' : '📄 Pitch Deck Review';
             
-            // Handle date/time display for different session types
             if (details.sessionType === 'live') {
                 document.getElementById('confirmDate').textContent = `September ${details.date}, 2025`;
                 document.getElementById('confirmTime').textContent = details.time;
@@ -1636,12 +2313,10 @@
                 document.getElementById('confirmDuration').textContent = '24-48 hours turnaround';
             }
             
-            // Payment details
             document.getElementById('confirmSessionFee').textContent = details.sessionFee;
             document.getElementById('confirmPlatformFee').textContent = details.platformFee;
             document.getElementById('confirmTotal').textContent = details.total;
             
-            // Update next steps based on session type
             const nextStepInfo = document.getElementById('nextStepInfo');
             if (details.sessionType === 'live') {
                 nextStepInfo.textContent = 'Zoom link will be sent 30 minutes before the pitch session';
@@ -1649,7 +2324,6 @@
                 nextStepInfo.textContent = 'Upload your pitch files and receive detailed feedback within 24-48 hours';
             }
             
-            // Show confirmation page
             showPage('confirmation');
         }
 
@@ -1659,19 +2333,11 @@
             showPage('confirmation');
         }
 
-        // Mobile menu toggle (for future enhancement)
-        function toggleMobileMenu() {
-            // Implementation for mobile menu toggle
-            console.log('Mobile menu toggle');
-        }
-
-        // Initialize page
+        // Initialize
         function init() {
-            // Set up event listeners and initial state
             console.log('UpStride pitch platform initialized');
         }
 
-        // Call init when page loads
         init();
     </script>
 </body>
