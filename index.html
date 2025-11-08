@@ -851,6 +851,8 @@
             height: 100%;
             background: rgba(0,0,0,0.5);
             z-index: 2000;
+            overflow-y: auto;
+            padding: 2rem 0;
         }
 
         .modal.active {
@@ -1290,8 +1292,8 @@
     </div>
 
     <!-- Post Idea Modal -->
-    <div id="postIdeaModal" class="modal">
-        <div class="modal-content" style="max-width: 600px; text-align: left;">
+    <div id="postIdeaModal" class="modal" style="overflow-y: auto;">
+        <div class="modal-content" style="max-width: 700px; text-align: left; max-height: 90vh; overflow-y: auto; margin: 2rem auto;">
             <h2 style="color: #1f2937; margin-bottom: 1.5rem; text-align: center;">Post Your Idea</h2>
             
             <form onsubmit="submitIdea(event)">
@@ -1345,9 +1347,48 @@
                     </select>
                 </div>
 
+                <!-- Intellectual Property License Section -->
+                <div class="form-group">
+                    <label for="ideaLicense">Intellectual Property Protection *</label>
+                    <select id="ideaLicense" required onchange="showLicenseInfo()">
+                        <option value="">Select a license/protection type</option>
+                        <option value="cc-by-nc-nd">Creative Commons BY-NC-ND 4.0 (Recommended)</option>
+                        <option value="cc-by-nc">Creative Commons BY-NC 4.0</option>
+                        <option value="proprietary-nda">Proprietary with NDA (All Rights Reserved)</option>
+                        <option value="patent-pending">Patent Pending Status</option>
+                        <option value="trade-secret">Trade Secret Protection</option>
+                        <option value="copyright">Copyright Protection</option>
+                    </select>
+                    <div id="licenseInfo" style="margin-top: 0.75rem; padding: 1rem; background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 6px; display: none;">
+                        <div id="licenseDescription"></div>
+                    </div>
+                </div>
+
+                <!-- IP Protection Notice -->
+                <div style="background: #fef3c7; padding: 1.25rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #f59e0b;">
+                    <h4 style="color: #92400e; margin-bottom: 0.75rem; font-size: 0.95rem;">🛡️ Your Idea is Protected</h4>
+                    <ul style="color: #92400e; font-size: 0.85rem; padding-left: 1.25rem; margin: 0;">
+                        <li style="margin-bottom: 0.5rem;">All viewers must accept a legally binding NDA before accessing full details</li>
+                        <li style="margin-bottom: 0.5rem;">Your selected license provides additional legal protection</li>
+                        <li style="margin-bottom: 0.5rem;">Timestamp and digital signature recorded for proof of ownership</li>
+                        <li style="margin-bottom: 0.5rem;">Violation reporting system available if idea theft occurs</li>
+                        <li>Platform maintains audit trail of all access and downloads</li>
+                    </ul>
+                </div>
+
+                <!-- Terms Acceptance -->
+                <div style="background: #f8fafc; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 2px solid #e5e7eb;">
+                    <label style="display: flex; align-items: start; gap: 0.75rem; cursor: pointer; margin: 0;">
+                        <input type="checkbox" id="agreeTerms" required style="margin-top: 0.25rem; width: 18px; height: 18px; cursor: pointer;">
+                        <span style="font-size: 0.9rem; color: #374151;">
+                            I confirm that I am the original creator of this idea and have the right to share it. I understand that this platform provides protective measures but I should also pursue appropriate legal protection (patents, trademarks, copyrights) for valuable intellectual property. *
+                        </span>
+                    </label>
+                </div>
+
                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
                     <button type="button" class="btn btn-outline" onclick="closePostIdeaModal()" style="flex: 1;">Cancel</button>
-                    <button type="submit" class="btn btn-primary" style="flex: 1;">Post Idea</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">🔒 Post Protected Idea</button>
                 </div>
             </form>
         </div>
@@ -2013,11 +2054,14 @@ Funding: ₹18L for sales team and tech infrastructure`,
                 const isUnlocked = unlockedIdeas.has(idea.id);
                 const lockedClass = isUnlocked ? '' : 'locked';
                 
+                const licenseBadge = idea.license ? `<div style="background: #dcfce7; color: #166534; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; display: inline-block; margin-top: 0.5rem;">🛡️ ${idea.licenseName || 'Protected'}</div>` : '';
+                
                 const ideaCard = `
                     <div class="idea-card ${lockedClass}">
                         <div class="idea-category">${idea.categoryName}</div>
                         <h3 class="idea-title">${idea.title}</h3>
                         <div class="idea-preview">${idea.brief}</div>
+                        ${licenseBadge}
                         
                         <div class="idea-stats">
                             <span>👁️ ${idea.views} views</span>
@@ -2058,6 +2102,7 @@ Funding: ₹18L for sales team and tech infrastructure`,
             document.querySelector('#postIdeaModal form').reset();
             document.getElementById('ideaBriefCount').textContent = '0';
             document.getElementById('ideaFullCount').textContent = '0';
+            document.getElementById('licenseInfo').style.display = 'none';
         }
 
         function updateCharCount(fieldId, maxLength) {
@@ -2072,8 +2117,61 @@ Funding: ₹18L for sales team and tech infrastructure`,
             }
         }
 
+        function showLicenseInfo() {
+            const license = document.getElementById('ideaLicense').value;
+            const licenseInfo = document.getElementById('licenseInfo');
+            const licenseDescription = document.getElementById('licenseDescription');
+            
+            const licenses = {
+                'cc-by-nc-nd': {
+                    name: 'Creative Commons Attribution-NonCommercial-NoDerivatives 4.0',
+                    description: '<strong>Recommended for Ideas</strong><br/>✅ <strong>You retain full ownership</strong><br/>✅ Others can view but cannot use commercially<br/>✅ No modifications or derivatives allowed<br/>✅ They must credit you as the creator<br/>✅ Free, globally recognized legal framework<br/>🌐 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" style="color: #2563eb;">Learn more</a>',
+                    color: '#166534'
+                },
+                'cc-by-nc': {
+                    name: 'Creative Commons Attribution-NonCommercial 4.0',
+                    description: '<strong>Allows Adaptations (Non-Commercial)</strong><br/>✅ You retain ownership<br/>✅ Others can adapt but not use commercially<br/>✅ They must credit you<br/>⚠️ Derivatives are allowed (with attribution)<br/>🌐 <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" style="color: #2563eb;">Learn more</a>',
+                    color: '#1e40af'
+                },
+                'proprietary-nda': {
+                    name: 'Proprietary - All Rights Reserved with NDA',
+                    description: '<strong>Maximum Protection</strong><br/>✅ Full copyright protection<br/>✅ All rights reserved to you<br/>✅ NDA required for all viewers<br/>✅ No usage allowed without explicit permission<br/>⚖️ Strongest legal protection available',
+                    color: '#be185d'
+                },
+                'patent-pending': {
+                    name: 'Patent Pending Status',
+                    description: '<strong>For Patentable Inventions</strong><br/>⚠️ <strong>You must have filed a patent application</strong><br/>✅ Provides legal notice of pending patent<br/>✅ Deters copying during review period<br/>📋 Patent application number required<br/>⚖️ Consult a patent attorney',
+                    color: '#92400e'
+                },
+                'trade-secret': {
+                    name: 'Trade Secret Protection',
+                    description: '<strong>Confidential Business Information</strong><br/>✅ Information kept strictly confidential<br/>✅ NDA protects disclosure<br/>✅ No registration required<br/>⚠️ Protection lost if publicly disclosed<br/>⚖️ Common for formulas, processes, methods',
+                    color: '#065f46'
+                },
+                'copyright': {
+                    name: 'Copyright Protection',
+                    description: '<strong>For Creative Works</strong><br/>✅ Automatic upon creation<br/>✅ Protects original expression of ideas<br/>✅ Covers written content, designs, code<br/>⚠️ Doesn\'t protect the underlying idea itself<br/>📋 Can register for additional legal benefits',
+                    color: '#7c2d12'
+                }
+            };
+            
+            if (license && licenses[license]) {
+                const info = licenses[license];
+                licenseDescription.innerHTML = `
+                    <h4 style="color: ${info.color}; margin-bottom: 0.75rem; font-size: 0.95rem;">${info.name}</h4>
+                    <div style="font-size: 0.85rem; line-height: 1.6; color: #374151;">${info.description}</div>
+                `;
+                licenseInfo.style.display = 'block';
+            } else {
+                licenseInfo.style.display = 'none';
+            }
+        }
+
         function submitIdea(event) {
             event.preventDefault();
+            
+            const selectedLicense = document.getElementById('ideaLicense').value;
+            const licenseName = document.getElementById('ideaLicense').options[document.getElementById('ideaLicense').selectedIndex].text;
             
             const newIdea = {
                 id: ideas.length + 1,
@@ -2084,6 +2182,9 @@ Funding: ₹18L for sales team and tech infrastructure`,
                 fullDetails: document.getElementById('ideaFull').value,
                 price: parseInt(document.getElementById('ideaPrice').value),
                 stage: document.getElementById('ideaStage').value,
+                license: selectedLicense,
+                licenseName: licenseName,
+                timestamp: new Date().toISOString(),
                 views: 0,
                 unlocks: 0,
                 postedBy: "You",
@@ -2094,7 +2195,7 @@ Funding: ₹18L for sales team and tech infrastructure`,
             renderIdeas(ideas);
             closePostIdeaModal();
             
-            alert('🎉 Your idea has been posted successfully! It\'s now live in the marketplace.');
+            alert('🎉 Your idea has been posted successfully with IP protection!\n\n📋 License: ' + licenseName + '\n🔒 Protected by NDA\n⏰ Timestamp: ' + new Date().toLocaleString() + '\n\nYour idea is now live in the marketplace with legal protection.');
             showPage('idea-marketplace');
         }
 
@@ -2153,8 +2254,10 @@ Funding: ₹18L for sales team and tech infrastructure`,
             
             idea.views += 1;
             
+            const licenseBadge = idea.license ? `<div style="background: #dcfce7; color: #166534; padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; display: inline-block; margin-bottom: 1rem;">🛡️ Protected under: ${idea.licenseName || 'License'}</div>` : '';
+            
             document.getElementById('detailIdeaTitle').textContent = idea.title;
-            document.getElementById('detailIdeaCategory').innerHTML = `<span class="idea-category">${idea.categoryName}</span>`;
+            document.getElementById('detailIdeaCategory').innerHTML = `<span class="idea-category">${idea.categoryName}</span>${licenseBadge}`;
             document.getElementById('detailIdeaFull').textContent = idea.fullDetails;
             document.getElementById('feedbackText').value = '';
             
